@@ -1,18 +1,42 @@
-// import * as fs from 'fs';
+export const MUL_REGEX = /mul\((\d+),(\d+)\)/g;
 
-// const input = fs.readFileSync('day_03/data.test.txt', 'utf8');
+export function findMatches(input: string, regex: RegExp): RegExpMatchArray[] {
+  return [...input.matchAll(regex)];
+}
 
-const file = Bun.file("data.input.txt");
-const data = await file.text();
+export function getMultiplications(matches: RegExpMatchArray[]): { x: number, y: number }[] {
+  return matches.map(match => ({
+    x: parseInt(match[1]),
+    y: parseInt(match[2])
+  }));
+}
 
-const mulRegex = /mul\((\d+),(\d+)\)/g;
-const matches = [...data.matchAll(mulRegex)];
+export function parseDosAndDonts(input: string) : string {
+  let result = "";
+  const parts = input.split("do()");
+  parts.forEach((part, i) => {
+    result += part.split("don't()")[0];
+gs  });
+  return result;
+}
 
-const multiplications = matches.map(match => ({
-  x: parseInt(match[1]),
-  y: parseInt(match[2])
-}));
+if (import.meta.main) {
+  main();
+}
 
-console.log(multiplications);
-const total = multiplications.reduce((sum, { x, y }) => sum + (x * y), 0);
-console.log("Total:", total);
+async function main() {
+  const file = Bun.file("data.input.txt");
+  const data = await file.text();
+
+  const matches = findMatches(data, MUL_REGEX);
+  const multiplications = getMultiplications(matches);
+  const total = multiplications.reduce((sum, { x, y }) => sum + (x * y), 0);
+  console.log("part one:", total);  // 179834255
+
+  const parsedData = parseDosAndDonts(data);
+  const matches2 = findMatches(parsedData, MUL_REGEX);
+  const multiplications2 = getMultiplications(matches2);
+  const total2 = multiplications2.reduce((sum, { x, y }) => sum + (x * y), 0);
+  console.log("part two:", total2);  // 179834255
+
+}
