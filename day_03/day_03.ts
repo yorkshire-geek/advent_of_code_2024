@@ -11,22 +11,22 @@ export function getMultiplications(matches: RegExpMatchArray[]): { x: number, y:
   }));
 }
 
-export function parseDosAndDonts(input: string) : string {
+export function parseDosAndDonts(input: string): string {
   let result = "";
   const parts = input.split("do()");
   parts.forEach((part, i) => {
     result += part.split("don't()")[0];
-    
+
   });
   return result;
 }
 
-// if (import.meta.main) {
-//   main();
-// }
+if (import.meta.main) {
+  main();
+}
 
-  const file = Bun.file("./day_03/data.input.txt");
-  const data = await file.text();
+async function main() {
+  const data = await Bun.file(import.meta.dir + "/data.input.txt").text();
 
   const matches = findMatches(data, MUL_REGEX);
   const multiplications = getMultiplications(matches);
@@ -38,4 +38,5 @@ export function parseDosAndDonts(input: string) : string {
   const multiplications2 = getMultiplications(matches2);
   const total2 = multiplications2.reduce((sum, { x, y }) => sum + (x * y), 0);
   console.log("part two:", total2);  // 179834255
+}
 

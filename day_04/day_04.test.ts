@@ -88,9 +88,7 @@ describe("Day 4 - Find XMAS diagonally NE. SE, SW, NW", async () => {
 });
 
 describe("Day 4 Part One- Check the example file", async () => {
-  // const file = Bun.file('./day_04/data.test.txt');
-  const input = await Bun.file(import.meta.dir + "/data.input.txt").text();
-  // const input = await file.text();
+  const input = await Bun.file(import.meta.dir + "/data.test.txt").text();
   const grid = gridFactory(input);
 
   test("The example file should have 18 XMAS's", async () => {
@@ -114,23 +112,24 @@ describe("Day 4 Part Two - Check the input file", async () => {
     '..........';
   const grid = gridFactory(input);
 
-  test.only("Find MSAMS at 1,9", async () => {
+  test("Find MSAMS at 1,9", async () => {
     expect(grid.findPattern(1, 9, "MSAMS")).toBe(true);
   });
 
-  test.only("Find SMASM at 3,7", async () => {
+  test("Find SMASM at 3,7", async () => {
     expect(grid.findPattern(3, 7, "SMASM")).toBe(true);
   });
 
-  test.only("Find MMASS at 5,8", async () => {
+  test("Find MMASS at 5,8", async () => {
     expect(grid.findPattern(5, 8, "MMASS")).toBe(true);
   });
 
-  test.only("Find MMASS at 0,3", async () => {
+  test("Find MMASS at 0,3", async () => {
     expect(grid.findPattern(0, 3, "SSAMM")).toBe(true);
   });
 
-  test.only("Find all patterns in the input", async () => {
+  test("Find all patterns in the input", async () => {
     expect(grid.findX_MasPattern()).toBe(9);
   });
+
 });

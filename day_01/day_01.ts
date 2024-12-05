@@ -1,5 +1,4 @@
-const file = Bun.file("./day_01/data.txt");
-const data = await file.text();
+const data = await Bun.file(import.meta.dir + "/data.txt").text();
 
 const [array1, array2] = data
   .trim()
