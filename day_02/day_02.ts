@@ -1,4 +1,4 @@
-const file = Bun.file("data.txt");
+const file = Bun.file("./day_02/data.txt");
 const data = await file.text();
 
 const arrays = data
@@ -9,14 +9,14 @@ const arrays = data
 const safeCount = arrays.reduce((count, element) => {
   return calculateSafe(element) ? count + 1 : count;
 }, 0);
-console.log(`Number of safe arrays: ${safeCount}`);
+// console.log(`Number of safe arrays: ${safeCount}`);
 
 const safeWithLifeCount = arrays.reduce((count, element) => {
   const result = calculateSafeWithSinglelife(element);
-  console.log(`Input: ${element}, Result: ${result}`);
+  // console.log(`Input: ${element}, Result: ${result}`);
   return result ? count + 1 : count;
 }, 0);
-console.log(`Number of safe arrays with single life: ${safeWithLifeCount}`);
+// console.log(`Number of safe arrays with single life: ${safeWithLifeCount}`);
 
 
 export function calculateSafe(input: number[]) : boolean {
@@ -33,7 +33,6 @@ function checkAscending(input: number[], lives: number): boolean {
     if (difference >= 0 || difference < -3) {
       if (lives > 0) {
         lives--;
-
 
         if ( i == input.length - 2 ) { // if it has got to the 2nd to last clear, it is valid.
           return true;

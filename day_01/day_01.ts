@@ -1,4 +1,4 @@
-const file = Bun.file("data.txt");
+const file = Bun.file("./day_01/data.txt");
 const data = await file.text();
 
 const [array1, array2] = data

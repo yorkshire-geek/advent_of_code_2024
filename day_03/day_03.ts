@@ -16,16 +16,16 @@ export function parseDosAndDonts(input: string) : string {
   const parts = input.split("do()");
   parts.forEach((part, i) => {
     result += part.split("don't()")[0];
-gs  });
+    
+  });
   return result;
 }
 
-if (import.meta.main) {
-  main();
-}
+// if (import.meta.main) {
+//   main();
+// }
 
-async function main() {
-  const file = Bun.file("data.input.txt");
+  const file = Bun.file("./day_03/data.input.txt");
   const data = await file.text();
 
   const matches = findMatches(data, MUL_REGEX);
@@ -39,4 +39,3 @@ async function main() {
   const total2 = multiplications2.reduce((sum, { x, y }) => sum + (x * y), 0);
   console.log("part two:", total2);  // 179834255
 
-}
