@@ -13,28 +13,87 @@ describe("Day 4 - Read data into a grid", async () => {
   });
 });
 
-describe("Day 4 - Find the message", async () => {
-  const input = '....X.....\n' +
-                '....M.....\n' +
-                '....A.....\n' +
+describe("Day 4 - Find XMAS in grid, left/right, up/down", async () => {
+  const input = '....X....S\n' +
+                '....M....A\n' +
+                '....A....M\n' +
                 '.XMAS.SAMX\n';
   const grid = gridFactory(input);
 
-  test("should find XMAS or SAMX on a line", async () => {
+  test("should find XMAS left to right", async () => {
     expect(grid.findRight(0, 0)).toBe(false);
     expect(grid.findRight(1, 0)).toBe(true);  // XMAS
     expect(grid.findRight(2, 0)).toBe(false);
-    expect(grid.findRight(6, 0)).toBe(true);  // SAMX
+    expect(grid.findRight(6, 0)).toBe(false);  // SAMX
     expect(grid.findRight(9, 0)).toBe(false);
     expect(grid.findRight(10, 0)).toBe(false); // out of bounds
   });
 
-  test("should find XMAS or SAMX up and down", async () => {
-    expect(grid.findUpOrDown(0, 0)).toBe(false);
-    // expect(grid.findLeftOrRight(1, 0)).toBe(true);  // XMAS
-    // expect(grid.findLeftOrRight(2, 0)).toBe(false);
-    // expect(grid.findLeftOrRight(6, 0)).toBe(true);  // SAMX
-    // expect(grid.findLeftOrRight(9, 0)).toBe(false);
-    // expect(grid.findLeftOrRight(10, 0)).toBe(false); // out of bounds
+  test("should find XMAS right to left", async () => {
+    expect(grid.findLeft(0, 0)).toBe(false);
+    expect(grid.findLeft(1, 0)).toBe(false);  // XMAS
+    expect(grid.findLeft(2, 0)).toBe(false);
+    expect(grid.findLeft(6, 0)).toBe(false);  
+    expect(grid.findLeft(9, 0)).toBe(true);   // SAMX
+    expect(grid.findLeft(10, 0)).toBe(false); // out of bounds
+  });
+
+  test("should find XMAS up", async () => {
+    expect(grid.findUp(0, 0)).toBe(false);
+    expect(grid.findUp(9, 0)).toBe(true);
+    expect(grid.findUp(4, 0)).toBe(false);
+    expect(grid.findUp(0, 10)).toBe(false); // out of bounds
+  });
+
+  test("should find XMAS down", async () => {
+    expect(grid.findDown(0, 0)).toBe(false);
+    expect(grid.findDown(4, 3)).toBe(true);
+    expect(grid.findDown(9, 1)).toBe(false);
+    expect(grid.findDown(0, 10)).toBe(false); // out of bounds
   });
 });
+
+describe("Day 4 - Find XMAS diagonally NE. SE, SW, NW", async () => {
+    const input = 'X..S..S..X\n' +
+                  '.MA....AM.\n' +
+                  '.MA....AM.\n' +
+                  'X..S..S..X\n';
+    const grid = gridFactory(input);
+  
+    test("should find XMAS diagonally NE", async () => {
+      expect(grid.findNorthEast(0, 0)).toBe(true);
+      expect(grid.findNorthEast(4, 4)).toBe(false);
+      expect(grid.findNorthEast(0, 10)).toBe(false); // out of bounds
+    });
+
+    test("should find XMAS diagonally NW", async () => {
+      expect(grid.findNorthWest(9, 0)).toBe(true);
+      expect(grid.findNorthWest(4, 4)).toBe(false);
+      expect(grid.findNorthWest(0, 10)).toBe(false); // out of bounds
+    });
+
+    test("should find XMAS diagonally SE", async () => {
+      expect(grid.findSouthEast(0, 3)).toBe(true);
+      expect(grid.findSouthEast(4, 4)).toBe(false);
+      expect(grid.findSouthEast(0, 10)).toBe(false); // out of bounds
+    });
+
+
+    test("should find XMAS diagonally SW", async () => {
+      expect(grid.findSouthWest(9, 3)).toBe(true);
+      expect(grid.findSouthWest(4, 4)).toBe(false);
+      expect(grid.findSouthWest(0, 10)).toBe(false); // out of bounds
+    });
+
+  });
+
+  describe("Day 4 - Check the example file", async () => {
+    const file = Bun.file('./day_04/data.test.txt');
+    const input = await file.text();
+    const grid = gridFactory(input);
+  
+    test("The example file should have 18 XMAS's", async () => {
+      expect(grid.findAll()).toBe(18);
+    });
+
+  });
