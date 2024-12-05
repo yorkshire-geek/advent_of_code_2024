@@ -131,6 +131,6 @@ describe("Day 4 Part Two - Check the input file", async () => {
   });
 
   test.only("Find all patterns in the input", async () => {
-    expect(grid.findX - MasPattern()).toBe(18);
+    expect(grid.findX_MasPattern()).toBe(9);
   });
 });
