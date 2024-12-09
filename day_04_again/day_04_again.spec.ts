@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { setupGrid } from "./day_04_again";
+import { Grid } from "./day_04_again";
 
 describe("Day 4 - Grid setup", () => {
   test("should read test input into grid correctly", () => {
     const input = 'abc\n' + 'DEF';
-    const grid = setupGrid(input);
+    const grid = new Grid(input);
 
     expect(grid.grid[0][0]).toBe("a");
     expect(grid.grid[0][1]).toBe("b");
@@ -22,7 +22,7 @@ describe("Left Right/ Up Down Operations", () => {
     const input = '......\n' + 
                   '..XMAS\n' + 
                   '......';
-    const grid = setupGrid(input);
+    const grid = new Grid(input);
 
     expect(grid.findRight(0, 0)).toBe(false);
     expect(grid.findRight(1, 2)).toBe(true);
@@ -32,7 +32,7 @@ describe("Left Right/ Up Down Operations", () => {
     const input = '......\n' + 
                   '.SAMX.\n' + 
                   '.....';
-    const grid = setupGrid(input);
+    const grid = new Grid(input);
 
     expect(grid.findLeft(0, 0)).toBe(false);
     expect(grid.findLeft(1, 4)).toBe(true);
@@ -44,7 +44,7 @@ describe("Left Right/ Up Down Operations", () => {
                   '..MS\n' + 
                   '..AA\n' + 
                   '..S.';
-    const grid = setupGrid(input);
+    const grid = new Grid(input);
 
     expect(grid.findDown(0, 0)).toBe(false);
     expect(grid.findDown(1, 2)).toBe(true);
@@ -57,7 +57,7 @@ describe("Left Right/ Up Down Operations", () => {
                   '..A.\n' + 
                   '..M.\n' + 
                   '..X.';
-    const grid = setupGrid(input);
+    const grid = new Grid(input);
 
     expect(grid.findUp(0, 0)).toBe(false);
     expect(grid.findUp(4, 2)).toBe(true);
@@ -66,7 +66,7 @@ describe("Left Right/ Up Down Operations", () => {
 
 describe("Find XMAS diagonally", async() => {
   const input = await Bun.file(import.meta.dir + "/test.txt").text();
-  const grid = setupGrid(input);
+  const grid = new Grid(input);
 
   test("should find diagonalDownRight", () => {
     expect(grid.findDiagonalDownRight(0, 0)).toBe(false);
@@ -85,7 +85,15 @@ describe("Find XMAS diagonally", async() => {
 
   test("should find diagonalUpLeft", () => {
     expect(grid.findDiagonalUpLeft(0, 0)).toBe(false);
-    expect(grid.findDiagonalUpLeft(5, 0)).toBe(true);
+    expect(grid.findDiagonalUpLeft(5, 6)).toBe(true);
   });
+});
 
+describe("Find XMAS diagonally", async() => {
+  const input = await Bun.file(import.meta.dir + "/test.txt").text();
+  const grid = new Grid(input);
+
+  test("should find diagonalUpLeft", () => {
+    expect(grid.findAll()).toBe(18);
+  });
 });

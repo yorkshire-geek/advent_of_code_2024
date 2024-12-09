@@ -9,11 +9,11 @@ class Grid {
     this.HEIGHT = grid[0].length;
   }
 
-  getGrid(): string[][] {
+  public getGrid(): string[][] {
     return this.grid;
   }
 
-  findAll(): number {
+  public findAll(): number {
     let count = 0;
     for (let x = 0; x < this.WIDTH; x++) {
       for (let y = 0; y < this.HEIGHT; y++) {
@@ -46,7 +46,7 @@ class Grid {
   }
 
   public findRight(x: number, y: number): boolean {
-    if (x >= this.WIDTH - (this.WORD_LENGTH - 1)) return false;
+    //if (x >= this.WIDTH - (this.WORD_LENGTH - 1)) return false;
     return this.getWord(x, y, 1, 0) === this.XMAS;
   }
 
