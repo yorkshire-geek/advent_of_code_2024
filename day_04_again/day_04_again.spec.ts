@@ -97,3 +97,25 @@ describe("Find XMAS diagonally", async() => {
     expect(grid.findAll()).toBe(18);
   });
 });
+
+describe('Part 2 - Find X-MAS', () => { 
+  const input = '.M.S......\n' +
+    '..A..MSMS.\n' +
+    '.M.S.MAA..\n' +
+    '..A.ASMSM.\n' +
+    '.M.S.M....\n' +
+    '..........\n' +
+    'S.S.S.S.S.\n' +
+    '.A.A.A.A..\n' +
+    'M.M.M.M.M.\n' +
+    '..........';
+  const grid = new Grid(input);
+
+  test(`should find all A's in input`, () => { 
+    expect(grid.findAllAs().length).toBe(9)
+   })
+
+   test('should find M and S from A', () => {
+      expect(grid.findMAndSFromA({row: 3, col: 2})).toBe(true)
+    })
+})

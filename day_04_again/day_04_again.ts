@@ -22,6 +22,7 @@ const DirectionLookup = {
   DIAGONAL_UP_LEFT: [-1, -1],
 } as const;
 
+type Coordinate = { row: number; col: number };
 export class Grid {
   private readonly LOOKUP = "XMAS";
 
@@ -82,18 +83,39 @@ export class Grid {
 
   findAll(): number {
     let count = 0;
-    for (let x = 0; x < this.grid.length; x++) {
-      for (let y = 0; y < this.grid[0].length; y++) {
-        if (this.findRight(x, y)) count++;
-        if (this.findLeft(x, y)) count++;
-        if (this.findUp(x, y)) count++;
-        if (this.findDown(x, y)) count++;
-        if (this.findDiagonalDownRight(x, y)) count++;
-        if (this.findDiagonalDownLeft(x, y)) count++;
-        if (this.findDiagonalUpRight(x, y)) count++;
-        if (this.findDiagonalUpLeft(x, y)) count++;
+    for (let row = 0; row < this.grid.length; row++) {
+      for (let col = 0; col < this.grid[0].length; col++) {
+        if (this.findRight(row, col)) count++;
+        if (this.findLeft(row, col)) count++;
+        if (this.findUp(row, col)) count++;
+        if (this.findDown(row, col)) count++;
+        if (this.findDiagonalDownRight(row, col)) count++;
+        if (this.findDiagonalDownLeft(row, col)) count++;
+        if (this.findDiagonalUpRight(row, col)) count++;
+        if (this.findDiagonalUpLeft(row, col)) count++;
       }
     }
     return count;
+  }
+
+  findAllAs(): Coordinate[] {
+    let result: Coordinate[] = [];
+    for (let row = 0; row < this.grid.length; row++) {
+      for (let col = 0; col < this.grid[0].length; col++) {
+        if (this.grid[row][col] === "A") {
+          result.push({ row, col });
+        }
+      }
+    }
+
+    return result;
+  }
+  
+  findMFromA(coord: Coordinate): boolean {
+    if (this.grid[coord.row - 1][coord.col - 1] === "M" && this.grid[coord.row - 1][coord.col - 1] === "M") {
+      return true
+    }
+
+    return false;
   }
 }
