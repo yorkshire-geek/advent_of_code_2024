@@ -111,8 +111,8 @@ export class Grid {
     return result;
   }
   
-  findMFromA(coord: Coordinate): boolean {
-    if (this.grid[coord.row - 1][coord.col - 1] === "M" && this.grid[coord.row - 1][coord.col - 1] === "M") {
+  findMAndSFromA(coord: Coordinate): boolean {
+    if (this.grid[coord.row - 1][coord.col - 1] === "M" && this.grid[coord.row + 1][coord.col + 1] === "S") {
       return true
     }
 
