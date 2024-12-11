@@ -35,7 +35,7 @@ export class Grid {
       .map((line) => line.split(""));
   }
 
-  private findLine(row: number, col: number, direction: Directions): boolean {
+  private findWord(row: number, col: number, direction: Directions): boolean {
     const [rowShift, colShift] = DirectionLookup[direction];
     const diagonal: string[] = [];
     for (let i = 0; i < this.LOOKUP.length; i++) {
@@ -50,35 +50,35 @@ export class Grid {
   }
 
   findRight(row: number, col: number): boolean {
-    return this.findLine(row, col, Directions.RIGHT);
+    return this.findWord(row, col, Directions.RIGHT);
   }
 
   findLeft(row: number, col: number): boolean {
-    return this.findLine(row, col, Directions.LEFT);
+    return this.findWord(row, col, Directions.LEFT);
   }
 
   findDown(row: number, col: number): boolean {
-    return this.findLine(row, col, Directions.DOWN);
+    return this.findWord(row, col, Directions.DOWN);
   }
 
   findUp(row: number, col: number): boolean {
-    return this.findLine(row, col, Directions.UP);
+    return this.findWord(row, col, Directions.UP);
   }
 
   findDiagonalDownRight(row: number, col: number): boolean {
-    return this.findLine(row, col, Directions.DIAGONAL_DOWN_RIGHT);
+    return this.findWord(row, col, Directions.DIAGONAL_DOWN_RIGHT);
   }
 
   findDiagonalDownLeft(row: number, col: number): boolean {
-    return this.findLine(row, col, Directions.DIAGONAL_DOWN_LEFT);
+    return this.findWord(row, col, Directions.DIAGONAL_DOWN_LEFT);
   }
 
   findDiagonalUpRight(row: number, col: number): boolean {
-    return this.findLine(row, col, Directions.DIAGONAL_UP_RIGHT);
+    return this.findWord(row, col, Directions.DIAGONAL_UP_RIGHT);
   }
 
   findDiagonalUpLeft(row: number, col: number): boolean {
-    return this.findLine(row, col, Directions.DIAGONAL_UP_LEFT);
+    return this.findWord(row, col, Directions.DIAGONAL_UP_LEFT);
   }
 
   findAll(): number {
@@ -95,6 +95,7 @@ export class Grid {
         if (this.findDiagonalUpLeft(row, col)) count++;
       }
     }
+    console.log(count);
     return count;
   }
 
@@ -110,12 +111,27 @@ export class Grid {
 
     return result;
   }
-  
-  findMAndSFromA(coord: Coordinate): boolean {
-    if (this.grid[coord.row - 1][coord.col - 1] === "M" && this.grid[coord.row + 1][coord.col + 1] === "S") {
-      return true
-    }
 
-    return false;
+  findXMASFromA(coord: Coordinate): boolean {
+    if (coord.row < 1) return false;
+
+    return (
+      (this.grid[coord.row - 1][coord.col - 1] === "M" && 
+        this.grid[coord.row - 1][coord.col + 1] === "S" &&
+        this.grid[coord.row + 1][coord.col + 1] === "S" && 
+        this.grid[coord.row + 1][coord.col - 1] === "M") ||
+      (this.grid[coord.row - 1][coord.col - 1] === "S" &&
+        this.grid[coord.row - 1][coord.col + 1] === "M" &&
+        this.grid[coord.row + 1][coord.col + 1] === "M" &&
+        this.grid[coord.row + 1][coord.col - 1] === "S") ||
+      (this.grid[coord.row - 1][coord.col - 1] === "S" &&
+        this.grid[coord.row - 1][coord.col + 1] === "S" &&
+        this.grid[coord.row + 1][coord.col + 1] === "M" &&
+        this.grid[coord.row + 1][coord.col - 1] === "M") ||
+      (this.grid[coord.row - 1][coord.col - 1] === "M" &&
+        this.grid[coord.row - 1][coord.col + 1] === "M" &&
+        this.grid[coord.row + 1][coord.col + 1] === "S" &&
+        this.grid[coord.row + 1][coord.col - 1] === "S")
+    );
   }
 }
