@@ -134,4 +134,15 @@ export class Grid {
         this.grid[coord.row + 1][coord.col - 1] === "S")
     );
   }
+
+  findAllXmas() {
+    let count = 0;
+    const allACoordinatines = this.findAllAs();
+    for (const coord of allACoordinatines) {
+      this.findXMASFromA(coord) && count++;
+    }
+
+    return count;
+  }
+
 }
