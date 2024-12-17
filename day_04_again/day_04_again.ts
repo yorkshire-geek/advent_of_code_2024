@@ -1,4 +1,4 @@
-const file = await Bun.file(import.meta.dir + "/test.txt").text();
+
 
 enum Directions {
   RIGHT = "RIGHT",
@@ -113,7 +113,7 @@ export class Grid {
   }
 
   findXMASFromA(coord: Coordinate): boolean {
-    if (coord.row < 1) return false;
+    if ((coord.row < 1) || (coord.row >= this.grid[0].length -1)) return false;
 
     return (
       (this.grid[coord.row - 1][coord.col - 1] === "M" && 
@@ -136,13 +136,20 @@ export class Grid {
   }
 
   findAllXmas() {
-    let count = 0;
-    const allACoordinatines = this.findAllAs();
-    for (const coord of allACoordinatines) {
-      this.findXMASFromA(coord) && count++;
-    }
-
-    return count;
+    return this.findAllAs().filter(coord => this.findXMASFromA(coord)).length;
   }
+  
+}
 
+async function main() {
+  const file = await Bun.file(import.meta.dir + "/test.txt").text();
+  const data = await Bun.file(import.meta.dir + "/input.txt").text();
+  const grid = new Grid(data);
+
+  console.log("Question 1: Total XMAS count:", grid.findAll()); // 2644
+  console.log("Question 2: Total pattern count:", grid.findAllXmas()); // 1952
+}
+
+if (import.meta.main) {
+  await main();
 }
